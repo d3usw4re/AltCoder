@@ -1,11 +1,13 @@
-int writeAltCode(String message){
-	char chars[message.length()+1];
-	message.toCharArray(chars, message.length()+1);
+#include <Keyboard.h>
+
+void writeAltCode(String message){
+	char chars[message.length() + 1];
+	message.toCharArray(chars, message.length() + 1);
 	
-	for(int a = 0; a<sizeof(chars)-1; a++){
+	for(uint32_t a = 0; a < sizeof(chars) - 1; a++){
 		Keyboard.press(KEY_LEFT_ALT);
 		
-		int dec_char = (int)chars[a];
+		int dec_char = (int) chars[a];
 		int b = 3;
 		int char_ascii[] = {-1, -1, -1, -1};
 		while(dec_char > 0) {
@@ -13,18 +15,12 @@ int writeAltCode(String message){
 			dec_char /= 10;
 			b--;
 		}
-		for(b=0; b<4; b++){
+		for(b = 0; b < 4; b++){
 			if(char_ascii[b] != -1){
-				if(char_ascii[b] == 0){
-					Keyboard.press(234);
-					Keyboard.release(234);
-				}else{
-					Keyboard.press(224 + char_ascii[b]);
-					Keyboard.release(224 + char_ascii[b]);
-				}
+				if(char_ascii[b] == 0) Keyboard.write(234);
+				else Keyboard.write(224 + char_ascii[b]);
 			}
 		}
 		Keyboard.release(KEY_LEFT_ALT);
 	}
-	return 0;
 }
